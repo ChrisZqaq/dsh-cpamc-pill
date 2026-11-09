@@ -1,0 +1,9 @@
+# dsh-cpamc-pill bundle patch.
+#
+# One Host row mounts the package. The capsule itself is a Client half declared
+# in package.json `dsh.client`; the row id, the client factory id, and the
+# package name must all agree.
+- insert:
+    - id: dsh-cpamc-pill
+      name: '@local/dsh-cpamc-pill'
+      config: {}

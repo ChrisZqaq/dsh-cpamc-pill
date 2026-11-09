@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "CPA 反代状态与今日用量",
+    "description": "侧边栏底部的小胶囊：显示 cli-proxy-api / CPAMP 的连接状态与今日 token 总量，悬停展开账号池与模型明细。"
+  }
+}

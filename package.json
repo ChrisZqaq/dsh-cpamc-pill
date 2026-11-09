@@ -1,0 +1,53 @@
+{
+  "name": "@local/dsh-cpamc-pill",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "CPAMC 小胶囊：侧边栏底部显示 CPA 反代连接状态与今日 token 用量，悬停出明细。",
+  "keywords": [
+    "dsh-plugin",
+    "cpamc",
+    "cli-proxy-api",
+    "cpa-manager-plus",
+    "token-usage"
+  ],
+  "license": "MIT",
+  "author": "ChrisZqaq",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisZqaq/dsh-cpamc-pill.git"
+  },
+  "homepage": "https://github.com/ChrisZqaq/dsh-cpamc-pill#readme",
+  "bugs": {
+    "url": "https://github.com/ChrisZqaq/dsh-cpamc-pill/issues"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "host/*.js",
+    "cordis.patch.yml",
+    "locale/*.json"
+  ],
+  "scripts": {
+    "verify": "node scripts/verify.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  }
+}

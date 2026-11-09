@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "CPA proxy status and today’s usage",
+    "description": "Sidebar-foot capsule showing cli-proxy-api / CPAMP connection health and today’s token total, expanding to account-pool and model details on hover."
+  }
+}

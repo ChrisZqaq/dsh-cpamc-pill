@@ -1,0 +1,8 @@
+node_modules/
+*.log
+.DS_Store
+/.dsh/
+cpamc-pill.json
+credentials.env
+.env
+.env.*
