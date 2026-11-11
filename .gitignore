@@ -6,3 +6,15 @@ cpamc-pill.json
 credentials.env
 .env
 .env.*
+# 机器/密钥信息只放 ~/.dsh/infra/infra.yml，绝不入库
+infra.yml
+infra*.yml
+!infra.sample.yml
+*.pem
+*.p12
+id_rsa
+id_ed25519
+id_ed25519*
+*.key
+.credentials.yaml
+*.secret
