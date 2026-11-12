@@ -172,27 +172,22 @@ window.__ModuleLoader__.load({
     // ---------------------------------------------------------------- styling
 
     const CSS = `
-.dshc-root{position:relative;display:flex;align-items:center;min-width:0}
-.dshc-pill{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;box-sizing:border-box;
-  border:1px solid var(--dsw-alias-border-l2);border-radius:999px;background:var(--dsw-alias-bg-layer-1);
-  color:var(--dsw-alias-label-primary);font:inherit;font-size:12px;line-height:1;cursor:pointer;
-  transition:background .12s ease,border-color .12s ease}
-.dshc-pill:hover{background:var(--dsw-alias-interactive-bg-hover)}
+.dshc-root{position:relative;display:flex;align-items:center;min-width:0;flex:1}
+.dshc-pill{display:inline-flex;align-items:center;justify-content:flex-start;gap:6px;min-width:0;flex:1;height:32px;padding:0 9px;box-sizing:border-box;border:0;border-radius:var(--dsw-radius-sm);background:transparent;color:var(--dsw-alias-label-secondary);font:inherit;font-size:12px;line-height:1;cursor:pointer;transition:background .12s ease,color .12s ease}
+@media (hover:hover){.dshc-pill:hover{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}}
 .dshc-pill:focus-visible{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:1px}
-.dshc-pill[data-pinned='yes']{border-color:var(--dsw-alias-border-l3)}
-.dshc-rail{width:28px;padding:0;justify-content:center}
+.dshc-pill[data-pinned='yes']{background:var(--dsw-alias-interactive-bg-hover);color:var(--dsw-alias-label-primary)}
+.dshc-rail{flex:none;width:28px;min-width:0;padding:0;justify-content:center}
 .dshc-dot{width:6px;height:6px;border-radius:50%;flex:none;background:var(--dsw-alias-label-tertiary)}
 .dshc-dot[data-health='ok']{background:var(--dsw-alias-state-success-primary)}
 .dshc-dot[data-health='degraded']{background:var(--dsw-alias-state-warn-primary)}
 .dshc-dot[data-health='offline'],.dshc-dot[data-health='unconfigured']{background:var(--dsw-alias-state-error-primary)}
-.dshc-name{color:var(--dsw-alias-label-secondary)}
-.dshc-sep{color:var(--dsw-alias-label-tertiary)}
-.dshc-value{font-variant-numeric:tabular-nums;color:var(--dsw-alias-label-primary)}
+.dshc-value{font-variant-numeric:tabular-nums;color:inherit;white-space:nowrap}
 .dshc-muted{color:var(--dsw-alias-label-tertiary)}
 
-.dshc-card{position:fixed;z-index:60;width:304px;padding:14px 14px 12px;box-sizing:border-box;
+.dshc-card{position:fixed;z-index:60;width:312px;padding:16px 16px 14px;box-sizing:border-box;
   border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-1);
-  box-shadow:0 12px 32px rgba(0,0,0,.28);color:var(--dsw-alias-label-primary);font-size:12px;line-height:18px}
+  box-shadow:0 8px 24px rgba(0,0,0,.18);color:var(--dsw-alias-label-primary);font-size:12px;line-height:18px}
 .dshc-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
   color:var(--dsw-alias-label-tertiary);font-size:11px}
 .dshc-title{display:flex;align-items:center;gap:8px;margin-top:4px}
@@ -551,16 +546,8 @@ window.__ModuleLoader__.load({
               openCard()
             },
           },
-          h('span', { className: 'dshc-dot', 'data-health': health }),
-          wide
-            ? h(
-                'span',
-                null,
-                h('span', { className: 'dshc-name' }, 'CPA'),
-                h('span', { className: 'dshc-sep' }, ' · '),
-                h('span', { className: 'dshc-value' }, data ? fmtTokens(today.total) : '—'),
-              )
-            : null,
+          h('span', { className: 'dshc-dot', 'data-health': data ? health : 'unknown' }),
+          wide ? h('span', { className: 'dshc-value' }, data ? fmtTokens(today.total) : '—') : null,
         )
 
         return h('div', { className: 'dshc-root', ref: anchorRef }, h('style', null, CSS), pill, card)
@@ -584,7 +571,7 @@ window.__ModuleLoader__.load({
           'button',
           { type: 'button', className: 'dshc-pill', 'data-health': 'offline', title: DICTIONARIES.en.failed },
           h('span', { className: 'dshc-dot', 'data-health': 'offline' }),
-          h('span', null, h('span', { className: 'dshc-value' }, '—')),
+          h('span', { className: 'dshc-value' }, '—'),
         )
       }
     }
@@ -607,6 +594,7 @@ window.__ModuleLoader__.load({
       /** Pure helpers the offline harness exercises without a Host. */
       __test__: {
         DICTIONARIES,
+        CSS,
         readStatus,
         fmtTokens,
         fmtMs,

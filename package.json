@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-cpamc-pill",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "CPAMC 小胶囊：侧边栏底部显示 CPA 反代连接状态与今日 token 用量，悬停出明细。",

@@ -18,6 +18,8 @@
  * service has to render as "offline", not as an empty sidebar slot.
  */
 
+import { createQuotaReader } from './quota.js'
+
 /** Result is reused across requests inside this window. */
 const CACHE_MS = 15_000
 
@@ -130,6 +132,7 @@ export function accountOf(row, now = Date.now()) {
   return {
     label: String(row.label ?? row.name ?? row.id ?? ''),
     provider: String(row.provider ?? row.type ?? ''),
+    authIndex: String(row.auth_index ?? row.authIndex ?? ''),
     status: String(row.status ?? 'unknown'),
     disabled: row.disabled === true,
     cooling: until > now,

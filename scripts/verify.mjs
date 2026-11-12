@@ -77,7 +77,7 @@ const client = loaded.factory((id) => {
   if (id === 'react') return React
   throw new Error(`unexpected require(${id})`)
 })
-const { DICTIONARIES, readStatus, fmtTokens, fmtMs, fmtPercent, emptyPayload } = client.__test__
+const { DICTIONARIES, CSS, readStatus, fmtTokens, fmtMs, fmtPercent, emptyPayload } = client.__test__
 
 const cpamc = await import(pathToFileURL(join(root, 'host/cpamc.js')).href)
 const creds = await import(pathToFileURL(join(root, 'host/credentials.js')).href)
@@ -377,7 +377,11 @@ const flatten = (node, out = []) => {
 const flat = flatten(tree)
 const text = flat.filter((node) => typeof node === 'string').join(' ')
 check('renders without a Host', tree?.props?.className === 'dshc-root')
-check('the pill names the proxy', text.includes('CPA'), text.slice(0, 120))
+const pillNode = flat.find((node) => node?.props?.className?.includes('dshc-pill'))
+const pillText = flatten(pillNode).filter((node) => typeof node === 'string').join(' ')
+check('the pill drops the "CPA" label and keeps only dot + number', !pillText.includes('CPA'), pillText)
+check('the dot reports an unknown health until data lands', flatten(pillNode).some((node) => node?.props?.['data-health'] === 'unknown'))
+check('the status row is quiet, borderless, and aligned', /\.dshc-pill\{[^}]*background:transparent/.test(CSS) && /\.dshc-pill\{[^}]*border:0/.test(CSS) && /\.dshc-pill\{[^}]*justify-content:flex-start/.test(CSS))
 check('the pill shows a placeholder before data arrives', text.includes('—'), text.slice(0, 120))
 check('the pill carries the entry label for screen readers', flat.some((node) => node?.props?.['aria-label'] === 'label'))
 check('the health dot is decided at render time', flat.some((node) => node?.props?.['data-health'] !== undefined))
@@ -388,6 +392,7 @@ boundary.state = { failed: true }
 const fallback = boundary.render()
 check('the error boundary still renders a capsule', fallback?.props?.className === 'dshc-pill', fallback?.props?.className)
 
+check('status rows divide footer space without artificial gaps', /\.dshc-root\{[^}]*flex:1/.test(CSS))
 console.log('')
 if (failures > 0) {
   console.log(`${failures} check(s) failed`)
